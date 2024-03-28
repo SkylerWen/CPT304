@@ -46,17 +46,21 @@ public class UI {
 ///////////////////////////此去其他ui类//////////////////////////////
             if(flag==true && choice == 2)
             {
-                new LibrarianMenu(id , LibObj).setVisible(true);
+//                new LibrarianMenu(id , LibObj).setVisible(true);
+                LibrarianUI.Librarian(id , LibObj);
 
             }
             if(flag==true && choice == 1)
             {
                 new StudentMenuUI(id).setVisible(true);
+//                new LibrarianUI(id , LibObj);
 
             }
             if(flag==true && choice == 0)
             {
                 new ClerkMenuUI(id, LibObj).setVisible(true);
+//                new LibrarianUI(id , LibObj);
+
             }
 
 

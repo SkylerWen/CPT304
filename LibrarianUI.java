@@ -3,18 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LibrarianUI {
-    int id;
-    Library Obj;
-    public LibrarianUI(int  id , Library Obj) {
-        Librarian();
-        this.id=id;
-        this.Obj=Obj;
-    }
-    public static void main(String args[]) {
 
-    }
-
-    private void Librarian(){
+    public static void Librarian(int  id , Library Obj) {
 
         System.out.println("==================================");
         System.out.println("欢迎" + id + "登录图书管理系统");
@@ -258,11 +248,11 @@ public class LibrarianUI {
             System.out.println("Updated Successfully");
         }
 
-
-
-
     }
 
 
-
 }
+
+
+
+
