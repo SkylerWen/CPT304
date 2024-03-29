@@ -25,7 +25,6 @@ public class Librarian extends User{
     }
 
     public void CheckOutItem(int book_id, User borrower, ArrayList<Books> bookList, Loan Current_Loan, ArrayList<Loan> LoanList) {
-//没看懂干什么用的。。。。。。。。。。。。
         if (borrower.GetFineStatus() == true) {
             System.out.println("You must pay the fine before you can borrow another book.");
         }else{

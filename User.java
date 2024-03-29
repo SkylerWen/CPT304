@@ -6,7 +6,7 @@ import java.util.Scanner;
 abstract class User {
     //compulsory paras;
     private final String name;
-    private final String id;
+    private final int id;
     private final char gender;
     //optional paras;
     private String phone;
@@ -35,12 +35,15 @@ abstract class User {
         boolean result = db.SetTelephone(this.GetId(), this.phone);
     }
 
+    private int GetId() { return this.id;
+    }
+
     //Builder Pattern for constructor;
 
     public static abstract class Builder<T extends Builder<T>>{
         //compulsory para;
         private  String name;
-        private String id;
+        private int id;
         private char gender;
         //optional para;
         private String phone;
@@ -48,10 +51,10 @@ abstract class User {
         public T name(String s){
             this.name = s;
             return self();
-        }
+        }///s
 
-        public T id(String s){
-            this.id = s;
+        public T id(int i){
+            this.id = i;
             return self();
         }
         public T gender(char c){
