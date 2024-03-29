@@ -25,8 +25,8 @@
    - can add new book 
    - can delete a book 
    - can update book info
-   
-   
+
+
    **-Clerk**
    - can search book by title
    - can search book by subject
@@ -39,40 +39,30 @@
    - can record fine of borrower
    - can increase quantity of book
    - can decrease quantity of book
-   
+
    **-Borrower**
    - can search book by title
    - can search book by subject
    - can search book by author name
    - can view loan history of borrowers
    - request a loan
-   
-   
+
+
   **Run this project**
-  
+
   -For running this project , you must have installed JDK and NetBeans.
-  
-  
+
+
   -Create a new project using netbeans and include these files in source code folder.
-  
-  
+
+
   -The include sqljdc driver.
-  
-  
+
+
   -Change the connection string in **dbConnectivity.java** according to your system.
-  
-  
+
+
   -Select **LoginUI.java** and click on run file.
-  
-  
-  
-  
-  For getting in touch or any help follow [Minahil Imtiaz](https://www.linkedin.com/in/minahilimtiaz/)
-  
-  If this project helped you, then follow me on [@minaahilimtiaz](https://github.com/minaahilimtiaz/) and 🌟 [this repository](https://github.com/minaahilimtiaz/Library-Management-System-Java/)
-  
-  
- 
- 
-        
+
+​     
 
