@@ -301,7 +301,7 @@ public class Library {
         Loan L = new Loan();
         for (int counter=LoanList.size()-1 ; counter >=0; counter--){
             L = LoanList.get(counter);
-            if ((L.GetaBookId() == book_id) && (L.GetaBorrowerId() == user_id) && L.GetStatus()==false) {return L;}
+            if ((L.GetaBookId() == book_id) && (L.GetaBorrowerId() == user_id) && !L.GetStatus()) {return L;}
             }
     return null;
     }
@@ -313,28 +313,7 @@ public class Library {
         }
         return null;
     }
-    int getNewLoanID(){
-        int size=LoanList.size();
-        Loan L=LoanList.get(size-1);
-        int index=L.GetLoanId() + 1;
-        return index;
-    }
-    public Books getBookByID(int book_id){
-        for (Books b : BooksList) {
-            if (b.GetBookId() == book_id) {
-                return b;
-            }
-        }
-        return null;
-    }
-    public Users getUserByID(int user_id){
-        for (Users u : UsersList) {
-            if (u.GetId() == user_id) {
-                return u;
-            }
-        }
-        return null;
-    }
+
     public void RenewBook(int book_id, int type) {
         if (type == 1) {
             getBookByID(book_id).IncreaseQuantity();
@@ -515,17 +494,43 @@ public class Library {
     
     }
      
-    
-    
-    void LibrarianRecordFine(int user_id ,int clerk_id)
-    {
+    //================================================================================
+    //================================================================================
+    //================================================================================
+    // about my parts
+    int getNewLoanID(){
+        int size=LoanList.size();
+        Loan L=LoanList.get(size-1);
+        int index=L.GetLoanId() + 1;
+        return index;
+    }
+    public Books getBookByID(int book_id){
+        for (Books b : BooksList) {
+            if (b.GetBookId() == book_id) {
+                return b;
+            }
+        }
+        return null;
+    }
+    public Users getUserByID(int user_id){
+        for (Users u : UsersList) {
+            if (u.GetId() == user_id) {
+                return u;
+            }
+        }
+        return null;
+    }
+    void LibrarianRecordFine(int user_id ,int clerk_id) {
     
           for(int i=0; i < LibrarianList.size() ; i++)
        {
            Librarian L=LibrarianList.get(i);
            if(L.GetId()== clerk_id)
            {
-              L.PayFine(user_id, UsersList, LoanList);
+               Loan loan = new Loan();
+               ContextLoan context = new ContextLoan(new NothingState(),loan);
+               context.payFine(user_id);
+              //L.PayFine(user_id, UsersList, LoanList);
            }
           
        
@@ -534,11 +539,7 @@ public class Library {
         
       
     }
-     
-    
-    
-    
-       void LibrarianCheckInItem(String ret_date, int book_id, int borrower_id, int lib_id) {
+    void LibrarianCheckInItem(String ret_date, int book_id, int borrower_id, int lib_id) {
 
         for (int i = 0; i < LibrarianList.size(); i++) {
 
@@ -547,7 +548,10 @@ public class Library {
                 for (int j = 0; j < UsersList.size(); j++) {
                     Users U = UsersList.get(j);
                     if (borrower_id == U.GetId()) {
-                        L.CheckInItem(ret_date, book_id, U, this);
+                        Loan loan = new Loan();
+                        ContextLoan context = new ContextLoan(new NothingState(),loan);
+                        context.returnBook(ret_date,book_id,borrower_id);
+                        //L.CheckInItem(ret_date, book_id, U, this);
 
                     }
 
@@ -557,10 +561,7 @@ public class Library {
 
         }
     }
-     
-     
-     
-      void LibrarianCheckOutItem( int book_id, int borrower_id, int lib_id) {
+    void LibrarianCheckOutItem( int book_id, int borrower_id, int lib_id) {
 
         for (int i = 0; i < LibrarianList.size(); i++) {
 
@@ -569,12 +570,16 @@ public class Library {
                 for (int j = 0; j < UsersList.size(); j++) {
                     Users U = UsersList.get(j);
                     if (borrower_id == U.GetId()) {
-                        int size=LoanList.size();
-                        Loan L=LoanList.get(size-1);
-                        int index=L.GetLoanId();
-                        index=index+1;
-                        Loan LoanObj= new Loan(index);
-                        L1.CheckOutItem(book_id , U,BooksList ,LoanObj,  LoanList );
+                        Loan loan = new Loan();
+                        ContextLoan context = new ContextLoan(new NothingState(),loan);
+                        context.borrowBook(book_id,borrower_id);
+                        //int size=LoanList.size();
+                        //Loan L=LoanList.get(size-1);
+                        //int index=L.GetLoanId();
+                        //index=index+1;
+
+                        //Loan LoanObj= new Loan(index);
+                        //L1.CheckOutItem(book_id , U,BooksList ,LoanObj,  LoanList );
 
                     }
 
@@ -584,7 +589,9 @@ public class Library {
 
         }
     }
-     
+    //================================================================================
+    //================================================================================
+    //================================================================================
       
       
     void LibrarianRenewItem(int book_id ,int option ,int lib_id)  
