@@ -58,7 +58,6 @@ public class Borrower extends User{
 
     public String getAddress(){return this.address;}
 
-    @Override
     public boolean GetFineStatus() {
         dbConnectivity db = new dbConnectivity();
         return (db.GetFineStatus(this.GetId()));
@@ -77,7 +76,6 @@ public class Borrower extends User{
         boolean result = db.SetFineAmount(this.GetId(), user_fine);
     }
 
-    @Override
     public boolean AddLoanInfo(Loan LoanInfo) {
 
         BookLoans.add(LoanInfo);
@@ -119,8 +117,5 @@ public class Borrower extends User{
                 "Unpaid fine: " + this.fine + "\n";
         return result;
     }
-
-
-
 
 }

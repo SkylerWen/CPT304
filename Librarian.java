@@ -24,10 +24,10 @@ public class Librarian extends User{
         }
     }
 
-    public void CheckOutItem(int book_id, User borrower, ArrayList<Books> bookList, Loan Current_Loan, ArrayList<Loan> LoanList) {
+    public boolean CheckOutItem(int book_id, User borrower, ArrayList<Books> bookList, Loan Current_Loan, ArrayList<Loan> LoanList) {
         if (borrower.GetFineStatus() == true) {
             System.out.println("You must pay the fine before you can borrow another book.");
-        }else{
+        } else {
             Books loaned_book;
             for (Books b : bookList) { ////??????
                 if (b.GetBookId() == book_id) {
@@ -36,12 +36,12 @@ public class Librarian extends User{
                     Current_Loan.SetaBorrower(borrower);
                     borrower.AddLoanInfo(Current_Loan);
                     LoanList.add(Current_Loan);
-                    dbConnectivity db = new dbConnectivity ();
-                    return( db.AddNewLoan(Current_Loan) );
+                    dbConnectivity db = new dbConnectivity();
+                    return (db.AddNewLoan(Current_Loan));
                 }
             }
-
         }
+
     }
 
     public void AddBook(ArrayList<Books> BooksList ,String NewAuthor ,String NewTitle ,String NewSubject , int quantity) {

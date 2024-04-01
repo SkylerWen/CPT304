@@ -8,6 +8,7 @@ abstract class User {
     private final String name;
     private final int id;
     private final char gender;
+    private String pw;
     //optional paras;
     private String phone;
 
@@ -22,7 +23,7 @@ abstract class User {
     public String getName() {
         return name;
     }
-    public String getId() {
+    public int getId() {
         return id;
     }
     public char getGender(){return gender;}
@@ -35,8 +36,9 @@ abstract class User {
         boolean result = db.SetTelephone(this.GetId(), this.phone);
     }
 
-    private int GetId() { return this.id;
+    public int GetId() { return this.id;
     }
+    public String getPw(){return this.pw;}
 
     //Builder Pattern for constructor;
 
@@ -75,6 +77,7 @@ abstract class User {
 
 
     public ArrayList<Books> SearchBookbyTitle(String s){
+        Books[] bl;
         for (Books b : bl){
             String title = b.getTitle();
             if (title.contains(s) == true){
@@ -84,7 +87,7 @@ abstract class User {
             }
         }
 
-        ArrayList<Books> bookList = new ArrayList<>();
+        ArrayList<Books> bookList = new ArrayList<Books>();
         dbConnectivity db = new dbConnectivity();
         bookList = db.SearchBookbyTitle(s);
         if (bookList.isEmpty() == false){
@@ -114,7 +117,7 @@ abstract class User {
     }
 
     public ArrayList<Books> SearchBookbyAuthor(String s){
-        ArrayList<Books> bookList = new ArrayList<>();
+        ArrayList<Books> bookList = new ArrayList<Books>();
         dbConnectivity db = new dbConnectivity();
         bookList = db.SearchBookbyAuthor(s);
         if (bookList.isEmpty() == false){
@@ -148,43 +151,76 @@ abstract class User {
         System.out.println(info);
     }
 
-    //Applying Decorator Pattern to create an account(Borrower or Librarian)
-    public interface Creator{void createAccount();}
-    public class BorrowerCreator implements Creator{
-        @Override
-        public void createAccount(){
+    public interface LoginHandler{
+        boolean handle(User u);
+        void setNext(LoginHandler nextHandler);
+        LoginHandler getNextHandler();
+    }
 
+    public class IDHandler implements LoginHandler{
+        private LoginHandler next;
+
+        @Override
+        public LoginHandler getNextHandler(){return next;}
+
+        @Override
+        public boolean handle(User u){
+            dbConnectivity db = new dbConnectivity();
+            boolean flag = db.CheckUserId(u.getId());
+            if (flag == true){
+                this.setNext(next);
+            }else{
+                System.out.println("Cannot find user with ID:" + u.getId());
+            }
+            return flag;
+        }
+
+        @Override
+        public void setNext(LoginHandler nextHandler){
+            this.next = nextHandler;
         }
     }
-    public class LibrarianCreator implements Creator{
-        @Override
-        public void createAccount(){
 
+    public class PwHandler implements LoginHandler{
+        private LoginHandler next;
+        @Override
+        public LoginHandler getNextHandler(){return next;}
+        @Override
+        public boolean handle(User u){
+            dbConnectivity db = new dbConnectivity();
+            boolean flag = db.CheckUserPw(u.getPw());
+            if (flag == true){
+                this.setNext(next);
+            }else{
+                System.out.println("Cannot find user with ID:" + u.getId());
+            }
+            return flag;
+        }
+
+        @Override
+        public void setNext(LoginHandler nextHandler){
+            this.next = nextHandler;
         }
     }
-    public abstract class CreatorDecorator implements Creator{
 
+    public class LoginProcessor {
+        private LoginHandler chain;
+        public void addHandler(LoginHandler h){
+            if (chain == null){
+                chain = h;
+            }else{
+                LoginHandler currentHandler = chain;
+                while (currentHandler.getNextHandler()!= null){
+                    currentHandler = currentHandler.getNextHandler();
+                }
+                currentHandler.setNext(h);
+            }
+        }
+
+        public boolean logIn(String name, int id, String pw){
+            return chain.handle(User.this);
+        }
     }
-
-
-
-    public abstract void createAccount();
-
-
-    public void changePassword(String new_password){
-        Scanner s = new Scanner(System.in);
-        System.out.println("Please enter your previous password");
-        String input_password = s.nextLine();
-
-
-
-    }
-
-    public abstract void logIn(String id, String pw);
-
-
-
-
 
     @Override
     public String toString(){
