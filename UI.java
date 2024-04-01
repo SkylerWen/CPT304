@@ -20,49 +20,59 @@ public class UI {
             boolean flag =false;
 
             Scanner scanner = new Scanner(System.in);//键盘输入
-            System.out.println("请输入您的姓名：");
-            String name = scanner.nextLine();
-            System.out.println("请选择您的身份：2表示Librarian，1表示Borrower，0表示Clerk");
-            int choice = scanner.nextInt();
-            System.out.println("输入您的id:");
-            int id = scanner.nextInt();
-//            System.out.println("输入您的性别:男 or 女");
-//            String input = scanner.nextLine();
-//            char gender = input.charAt(0);
+            System.out.println("请选择：1登录, 2注册");
+            int choice1 = scanner.nextInt();
+            if (choice1 == 1){
+//                登录
+                System.out.println("请输入您的姓名：");
+                String name = scanner.nextLine();
+                System.out.println("请选择您的身份：1表示Borrower, 2表示Librarian");
+                int choice = scanner.nextInt();
+                System.out.println("输入您的id:");
+                int id = scanner.nextInt();
+                System.out.println("输入您的password:");
+                int password = scanner.nextInt();
+                if(choice == 2)
+                {
+                    flag=LibObj.IsLibrarianPresent(id);
+                }
+                else if (choice == 1)
+                {
+                    flag=LibObj.IsBorrowerPresent(id);
+                }
+                if(flag==true && choice == 2)
+                {
 
-            if(choice == 2)
-            {
-                flag=LibObj.IsLibrarianPresent(id);
-            }
-            else if (choice == 1)
-            {
-                flag=LibObj.IsBorrowerPresent(id);
-            }
-            else if (choice == 0)
-            {
-                flag=LibObj.IsClerkPresent(id);
-            }
+                    LibrarianUI.Librarian(id , LibObj);
 
-///////////////////////////此去其他ui类//////////////////////////////
-            if(flag==true && choice == 2)
-            {
-//                new LibrarianMenu(id , LibObj).setVisible(true);
-                LibrarianUI.Librarian(id , LibObj);
+                }
+                if(flag==true && choice == 1)
+                {
 
+                    BorrowerUI.Borrower(id , LibObj);
+
+                }
+
+            }else if (choice1 == 2){
+//                注册
+                System.out.println("请输入您的姓名：");
+                String name = scanner.nextLine();
+                System.out.println("请输入您的id");
+                int id = scanner.nextInt();
+                System.out.println("请输入您的gender：");
+                String inputGender = scanner.nextLine();
+                char gender = inputGender.charAt(0);
+                System.out.println("请输入您的telephone");
+                String tele = scanner.nextLine();
+                System.out.println("请输入您的address：");
+                String address = scanner.nextLine();
+                boolean success =false;
+                success = db.AddBorrower(id,name,gender,address,tele);
+                if(success ==true ){
+                    System.out.println("您已注册成功！");
+                }
+                login();
             }
-            if(flag==true && choice == 1)
-            {
-                new StudentMenuUI(id).setVisible(true);
-//                new LibrarianUI(id , LibObj);
-
-            }
-            if(flag==true && choice == 0)
-            {
-                new ClerkMenuUI(id, LibObj).setVisible(true);
-//                new LibrarianUI(id , LibObj);
-
-            }
-
 
         }
     }
