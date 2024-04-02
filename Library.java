@@ -79,7 +79,7 @@ public class Library {
             if(clerk_id == L.getId())
             {
 
-//                Str = Str + L.viewInformation(LoanList, user_id);
+                //Str = Str + L.viewInformation(LoanList, user_id);
                 break;
 
             }
@@ -152,46 +152,53 @@ public class Library {
     }
 
 
-//    boolean  AddNewBorrowerLibrarian(String borrower_name ,char gender  ,String tel_num ,String address, int clerk_id)
-//    {
-//        boolean result = false;
-//        for(int i=0; i < LibrarianList.size() ; i++)
-//        {
-//            Librarian L=LibrarianList.get(i);
-//            if(L.getId()== clerk_id)
-//            {
-//         dbConnectivity dbConnectivity = new dbConnectivity();
-//                result = dbConnectivity.AddBorrower(clerk_id, borrower_name, gender, tel_num, address);
-//                result = true;
-//                break;
-//
-//            }
-//
-//
-//        }
-//        return result;
-//
-//    }
-//    Boolean LibrarianUpdatingInfo( String Info , int choice, int clerk_id, int user_id)
-//    {
-//
-//
-//        boolean result=false;
-//        for(int i=0; i < LibrarianList.size() ; i++)
-//        {
-//            Librarian L = LibrarianList.get(i);
-//            if(L.getId()== clerk_id)
-//            {
-//                result= L.UpdatePerosnalInformation(UsersList , Info , choice, user_id);
-//
-//                break;
-//
-//            }
-//
-//
-//        }
-//        return result;
-//    }
+    boolean  AddNewBorrowerLibrarian(String borrower_name ,char gender  ,String tel_num ,String address, int clerk_id)
+    {
+        boolean result = false;
+        for(int i=0; i < LibrarianList.size() ; i++)
+        {
+            Librarian L=LibrarianList.get(i);
+            if(L.getId()== clerk_id)
+            {
+         dbConnectivity dbConnectivity = new dbConnectivity();
+                //result = dbConnectivity.AddBorrower(clerk_id, borrower_name, gender, tel_num, address);
+                result = true;
+                break;
+
+            }
+
+
+        }
+        return result;
+
+    }
+
+
+
+    Boolean LibrarianUpdatingInfo( String Info , int choice, int clerk_id, int user_id)
+    {
+
+
+        boolean result=false;
+        for(int i=0; i < LibrarianList.size() ; i++)
+        {
+            Librarian L = LibrarianList.get(i);
+            if(L.getId()== clerk_id)
+            {
+                //result= L.UpdatePerosnalInformation(UsersList , Info , choice, user_id);
+
+                break;
+
+            }
+
+
+        }
+        return result;
+
+
+    }
+
+
 
     int getNewLoanID(){
         int size=LoanList.size();
@@ -291,15 +298,14 @@ public class Library {
 
     }
 
-    void LibrarianAddNewBook( String NewAuthor ,String NewTitle ,String NewSubject , int quantity , int lib_id)
+    void LibrarianAddNewBook( String NewType, String NewAuthor ,String NewTitle ,String NewSubject , int quantity , int lib_id)
     {
         for (int i = 0; i < LibrarianList.size(); i++) {
 
             Librarian L = LibrarianList.get(i);
             if (L.getId() == lib_id) {
-                L.AddBook(BooksList, NewAuthor, NewTitle, NewSubject, quantity);
+                L.AddBook(BooksList, NewType, NewAuthor, NewTitle, NewSubject, quantity);
             }
-            //ArrayList<Books> BooksList , String NewType, String NewAuthor , String NewTitle , int quantity
 
         }
 

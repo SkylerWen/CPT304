@@ -24,8 +24,9 @@ public class UI {
             int choice1 = scanner.nextInt();
             if (choice1 == 1){
 //                登录
+                Scanner scanner2 = new Scanner(System.in);
                 System.out.println("请输入您的姓名：");
-                String name = scanner.nextLine();
+                String name = scanner2.nextLine();
                 System.out.println("请选择您的身份：1表示Borrower, 2表示Librarian");
                 int choice = scanner.nextInt();
                 System.out.println("输入您的id:");

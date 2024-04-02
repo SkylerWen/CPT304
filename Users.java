@@ -33,6 +33,11 @@ abstract class Users {
         dbConnectivity db = new dbConnectivity();
         boolean result = db.SetTelephone(this.getId(), this.phone);
     }
+    public void setName(String s){
+        //this.name = s;
+        dbConnectivity db = new dbConnectivity();
+        boolean result = db.SetTelephone(this.getId(), this.phone);
+    }
 
     public static abstract class Builder<T extends Builder<T>>{
         //compulsory para;

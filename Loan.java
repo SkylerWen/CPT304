@@ -160,7 +160,7 @@ public class Loan {
         db.SetLoanFineStatus(loanId, status);
     }
 
-    public boolean GetLoan(ArrayList<Books> BooksList, Borrower Loanee, ArrayList<Users> Borrowers, Staff AdminBody, ArrayList<Loan> LoanList) {
+    public boolean GetLoan(ArrayList<Books> BooksList, Borrower Loanee, ArrayList<Users> Borrowers, Users AdminBody, ArrayList<Loan> LoanList) {
         System.out.print("Search the book here \n Press 1. to search with title \n Press 2. to search by author name \n 3. to search by subject\n ");
         Scanner input = new Scanner(System.in);
         boolean status = false;
@@ -193,7 +193,7 @@ public class Loan {
         }
 
         if (is_available == true) {
-            status = AdminBody.CheckOutItem(id, Loanee, BooksList, this, LoanList);
+            //status = AdminBody.CheckOutItem(id, Loanee, BooksList, this, LoanList);
         }
         return status;
 

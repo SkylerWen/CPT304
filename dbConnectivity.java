@@ -173,7 +173,8 @@ public class dbConnectivity {
                 subject = rs.getString(20);
                 quantity = rs.getInt(21);
 
-                Borrower Loanee = new Borrower(borrower_id, borrower_name, borrower_gender, borrower_number, borrower_address, fine_defaulter, fine);
+                //Borrower Loanee = new Borrower(borrower_id, borrower_name, borrower_gender, borrower_number, borrower_address, fine_defaulter, fine);
+                Borrower Loanee = new Borrower.BorrowerBuilder().build();
                 Books LoanedBook = new Books(book_id, type, title, author, subject, quantity);
                 Loan LoanTempObj = new Loan(loan_id, Loanee, LoanedBook, fine_status, returned_status, issue_date, due_date, returned_date);
                 LoanList.add(LoanTempObj);
@@ -226,7 +227,8 @@ public class dbConnectivity {
                 subject = ds.getString(20);
                 quantity = ds.getInt(21);
 
-                Borrower Loanee = new Borrower(borrower_id, borrower_name, borrower_gender, borrower_number, borrower_address, fine_defaulter, fine);
+                //Borrower Loanee = new Borrower(borrower_id, borrower_name, borrower_gender, borrower_number, borrower_address, fine_defaulter, fine);
+                Borrower Loanee = new Borrower.BorrowerBuilder().build();
                 Books LoanedBook = new Books(book_id, type, title, author, subject, quantity);
                 Loan LoanTempObj = new Loan(loan_id, Loanee, LoanedBook, fine_status, returned_status, issue_date, due_date, returned_date);
                 LoanListofUser.add(LoanTempObj);

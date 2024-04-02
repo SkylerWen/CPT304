@@ -11,7 +11,6 @@ public class LibrarianUI {
         System.out.println("1.添加新书籍到图书馆");
         System.out.println("2.删除书籍");
         System.out.println("3.更新书籍信息");
-        System.out.println("13.更改书籍信息");
         System.out.println("==================================");
         System.out.println("请输入您的选择:");
         Scanner scanner = new Scanner(System.in);
@@ -19,6 +18,8 @@ public class LibrarianUI {
 
         if(choice ==1)
         {
+            System.out.println("请输入NewType：");
+            String NewType = scanner.nextLine();
             System.out.println("请输入NewAuthor：");
             String NewAuthor = scanner.nextLine();
             System.out.println("请输入NewTitle：");
@@ -27,7 +28,8 @@ public class LibrarianUI {
             String NewSubject = scanner.nextLine();
             System.out.println("请输入quantity：");
             int quantity = scanner.nextInt();
-            Obj.LibrarianAddNewBook(NewAuthor , NewTitle , NewSubject , quantity , id);
+            Obj.LibrarianAddNewBook(NewType,NewAuthor , NewTitle , NewSubject , quantity , id);
+            // String NewType, String NewAuthor ,String NewTitle ,String NewSubject , int quantity , int lib_id
             System.out.println("New Book Added Successfully");
         }
 

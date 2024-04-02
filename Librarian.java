@@ -57,7 +57,7 @@ public class Librarian extends Users{
         return false;
     }
 
-    public void AddBook(ArrayList<Books> BooksList , String NewType, String NewAuthor , String NewTitle , int quantity) {
+    public void AddBook(ArrayList<Books> BooksList , String NewType, String NewAuthor , String NewSubject,String NewTitle , int quantity) {
 
         Books LastBook = BooksList.get(BooksList.size()-1);
         int book_id = LastBook.getBook_id();
@@ -133,4 +133,7 @@ public class Librarian extends Users{
 
         }
 
-    }}
+    }
+
+
+}
