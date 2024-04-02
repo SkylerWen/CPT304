@@ -10,7 +10,7 @@ public class HasFineState implements LoanState{
                 L.SetFineStatus("Paid");
                 for (Users b : library.UsersList) {
                     int book_id = L.GetaBookId();
-                    if (b.GetId() == user_id) {
+                    if (b.getId() == user_id) {
                         b.SetFineAmount(0);
                         b.SetFineStatus(false);
                         //b.UpdateLoanInfo(L, book_id);

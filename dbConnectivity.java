@@ -5,6 +5,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.*;
+import java.io.*;
+import java.util.List;
+import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+import java.sql.ResultSet;
 
 public class dbConnectivity {
     Connection con;
@@ -119,278 +132,8 @@ public class dbConnectivity {
         }
     }
 
-    Borrower GetaBorrowerObjectByUserId(int id) {
 
-        Borrower BorrowerObject = new Borrower();
-        try {
-            ResultSet rs = stmt.executeQuery("select * from Borrower where borrower_id='" + id + "'");
-            while (rs.next()) {
-                int borrower_id;
-                String borrower_name, borrower_address, borrower_number;
-                char borrower_gender;
-                boolean fine_defaulter;
-                float fine;
 
-                borrower_id = rs.getInt(1);
-                borrower_name = rs.getString(2);
-                borrower_gender = rs.getString(3).charAt(0);
-                borrower_address = rs.getString(4);
-                borrower_number = rs.getString(5);
-                fine_defaulter = rs.getBoolean(6);
-                fine = rs.getFloat(7);
-
-                Borrower TempBorrowerObject = new Borrower(borrower_id, borrower_name, borrower_gender, borrower_address, borrower_number, fine_defaulter, fine);
-                BorrowerObject = TempBorrowerObject;
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return BorrowerObject;
-
-    }
-
-    ArrayList<Users> LoadAllBorrowers() {
-
-        ArrayList<Borrower> Borrowers = new ArrayList<>();
-        ArrayList<Users> CurrentUsers = new ArrayList<>();
-        try {
-            ResultSet rs = stmt.executeQuery("select * from Borrower");
-
-            while (rs.next()) {
-
-                int borrower_id;
-                String borrower_name, borrower_address, borrower_number;
-                char borrower_gender;
-                boolean fine_defaulter;
-                float fine;
-
-                borrower_id = rs.getInt(1);
-                borrower_name = rs.getString(2);
-                borrower_gender = rs.getString(3).charAt(0);
-                borrower_address = rs.getString(4);
-                borrower_number = rs.getString(5);
-                fine_defaulter = rs.getBoolean(6);
-                fine = rs.getFloat(7);
-
-                Borrower TempBorrowerObj = new Borrower(borrower_id, borrower_name, borrower_gender, borrower_number, borrower_address, fine_defaulter, fine);
-
-                Borrowers.add(TempBorrowerObj);
-
-                // System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getInt(5));
-            }
-
-            for (Borrower B : Borrowers) {
-                int borrower_id = B.GetId();
-                ArrayList<Loan> UserLoanArray = LoadLoanListofSpecificUser(borrower_id);
-                B.AllLoansofUser(UserLoanArray);
-
-            }
-
-            for (Borrower B : Borrowers) {
-                CurrentUsers.add(B);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return CurrentUsers;
-
-    }
-
-    boolean SetFineStatus(int borrower_id, boolean fine_defaulter) {
-
-        try {
-            stmt.executeUpdate("Update Borrower Set fine_defaulter='" + fine_defaulter + "' Where borrower_id='" + borrower_id + "'");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-
-    }
-
-    boolean SetTelephone(int borrower_id, String telnum) {
-
-        try {
-            stmt.executeUpdate("Update Borrower Set borrower_num='" + telnum + "' Where borrower_id='" + borrower_id + "'");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-
-    }
-    
-    
-     boolean SetAddress(int borrower_id, String Address) {
-
-        try {
-            stmt.executeUpdate("Update Borrower Set borrower_address='" + Address + "' Where borrower_id='" + borrower_id + "'");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-
-    }
-
-    boolean SetName(int borrower_id, String name) {
-
-        try {
-            stmt.executeUpdate("Update Borrower Set borrower_name='" + name+ "' Where borrower_id='" + borrower_id + "'");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-
-    }
-    
-    
-    boolean SetGender(int borrower_id, char g) {
-
-        try {
-            stmt.executeUpdate("Update Borrower Set borrower_gender='" + g+ "' Where borrower_id='" + borrower_id + "'");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-
-    }
-
-    boolean SetFineAmount(int borrower_id, double fine_amount) {
-
-        try {
-            stmt.executeUpdate("Update Borrower Set fine='" + fine_amount + "' Where borrower_id='" + borrower_id + "'");
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return true;
-
-    }
-
-    boolean GetFineStatus(int borrower_id) {
-        boolean result = false;
-        try {
-            ResultSet rs = stmt.executeQuery("select fine_defaulter from Borrower where borrower_id='" + borrower_id + "'");
-
-            while (rs.next()) {
-
-                result = rs.getBoolean(1);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return result;
-    }
-
-    double GetFineAmount(int borrower_id) {
-
-        double amount = 0.0;
-        try {
-            ResultSet rs = stmt.executeQuery("select fine from Borrower where borrower_id='" + borrower_id + "'");
-
-            while (rs.next()) {
-
-                amount = rs.getDouble(1);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return amount;
-
-    }
-
-    //Librarian Functions implemented here  
-    ArrayList<Librarian> LoadAllLibrarians() {
-
-        ArrayList<Librarian> CurrentLibrarians = new ArrayList<>();
-        try {
-            ResultSet rs = stmt.executeQuery("Select * From Staff Where rank='librarian'");
-            while (rs.next()) {
-                int staff_id;
-                String staff_name;
-                char staff_gender;
-
-                staff_id = rs.getInt(1);
-                staff_name = rs.getString(2);
-                staff_gender = rs.getString(3).charAt(0);
-
-                Librarian TempObj = new Librarian(staff_id, staff_name, staff_gender);
-                CurrentLibrarians.add(TempObj);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return CurrentLibrarians;
-
-    }
-
-    //Staff function
-    boolean AddBorrower(int user_id, String user_name, char user_gender, String add, String telnum) {
-
-        try {
-
-            boolean fine = false;
-            double fineamount = 0.0;
-
-            stmt.executeUpdate("Insert into Borrower (borrower_id, borrower_name ,borrower_gender, borrower_address , borrower_number , fine_defaulter ,fine) values('" + user_id + "','" + user_name + "','" + user_gender + "','" + add + "','" + telnum + "','" + fine + "','" + fineamount + "')");
-
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-        return true;
-
-    }
-
-    ArrayList<Clerk> LoadAllClerk() {
-
-        ArrayList<Clerk> CurrentClerk = new ArrayList<>();
-        try {
-            ResultSet rs = stmt.executeQuery("Select * From Staff Where rank='clerk'");
-            while (rs.next()) {
-                int staff_id;
-                String staff_name;
-                char staff_gender;
-
-                staff_id = rs.getInt(1);
-                staff_name = rs.getString(2);
-                staff_gender = rs.getString(3).charAt(0);
-
-                Clerk TempObj = new Clerk(staff_id, staff_name, staff_gender);
-                CurrentClerk.add(TempObj);
-
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return CurrentClerk;
-
-    }
 
     ArrayList<Loan> LoadLoanList() {
 
@@ -496,8 +239,279 @@ public class dbConnectivity {
 
     }
 
-    
+    static Books GetaBookbyId(int book_id) {
+        Books CurrentBook = new Books();
+        dbConnectivity dbConnectivity = new dbConnectivity();
+        try {
+            ResultSet rs = dbConnectivity.stmt.executeQuery("select * from Books where book_id='" + book_id + "'");
+            while (rs.next()) {
+                int quantity;
+                String type, title, author, subject;
+                book_id = rs.getInt(1);
+                type = rs.getString(2);
+                title = rs.getString(3);
+                author = rs.getString(4);
+                subject = rs.getString(5);
+                quantity = rs.getInt(6);
+                Books NewBook = new Books(book_id, type, title, author, subject, quantity);
+                CurrentBook = NewBook;
+            }
+        } catch (Exception e) { System.out.println(e); }
+        return CurrentBook;
+    }
+
+
+    Borrower GetaBorrowerObjectByUserId(int id) {
+
+        Borrower BorrowerObject = new Borrower.BorrowerBuilder().build();
+        try {
+            ResultSet rs = stmt.executeQuery("select * from Borrower where borrower_id='" + id + "'");
+            while (rs.next()) {
+                int borrower_id;
+                String borrower_name, borrower_address, borrower_number;
+                char borrower_gender;
+                boolean fine_defaulter;
+                float fine;
+
+                borrower_id = rs.getInt(1);
+                borrower_name = rs.getString(2);
+                borrower_gender = rs.getString(3).charAt(0);
+                borrower_address = rs.getString(4);
+                borrower_number = rs.getString(5);
+                fine_defaulter = rs.getBoolean(6);
+                fine = rs.getFloat(7);
+                //remains to be modified!
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+                Borrower TempBorrowerObject = new Borrower.BorrowerBuilder().id(borrower_id).name(borrower_name).gender(borrower_gender).address(borrower_address).build();
+                //origin below
+                //Borrower(borrower_id, borrower_name, borrower_gender, borrower_address, borrower_number, fine_defaulter, fine);
+                BorrowerObject = TempBorrowerObject;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return BorrowerObject;
+
+    }
+
+    ArrayList<Users> LoadAllBorrowers() {
+
+        ArrayList<Borrower> Borrowers = new ArrayList<>();
+        ArrayList<Users> CurrentUsers = new ArrayList<>();
+        try {
+            ResultSet rs = stmt.executeQuery("select * from Borrower");
+
+            while (rs.next()) {
+
+                int borrower_id;
+                String borrower_name, borrower_address, borrower_number;
+                char borrower_gender;
+                boolean fine_defaulter;
+                float fine;
+
+                borrower_id = rs.getInt(1);
+                borrower_name = rs.getString(2);
+                borrower_gender = rs.getString(3).charAt(0);
+                borrower_address = rs.getString(4);
+                borrower_number = rs.getString(5);
+                fine_defaulter = rs.getBoolean(6);
+                fine = rs.getFloat(7);
+
+                Borrower TempBorrowerObj = new Borrower.BorrowerBuilder().id(borrower_id).name(borrower_name).gender(borrower_gender).address(borrower_address).build();
+
+                Borrowers.add(TempBorrowerObj);
+
+                // System.out.println(rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3)+"  "+rs.getString(4)+"  "+rs.getInt(5));
+            }
+
+            for (Borrower B : Borrowers) {
+                int borrower_id = B.getId();
+                ArrayList<Loan> UserLoanArray = LoadLoanListofSpecificUser(borrower_id);
+                B.AllLoansofUser(UserLoanArray);
+
+            }
+
+            for (Borrower B : Borrowers) {
+                CurrentUsers.add(B);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return CurrentUsers;
+
+    }
+
+    boolean SetFineStatus(int borrower_id, boolean fine_defaulter) {
+
+        try {
+            stmt.executeUpdate("Update Borrower Set fine_defaulter='" + fine_defaulter + "' Where borrower_id='" + borrower_id + "'");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+
+    }
+
+    boolean SetTelephone(int borrower_id, String telnum) {
+
+        try {
+            stmt.executeUpdate("Update Borrower Set borrower_num='" + telnum + "' Where borrower_id='" + borrower_id + "'");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+
+    }
+
+
+    boolean SetAddress(int borrower_id, String Address) {
+
+        try {
+            stmt.executeUpdate("Update Borrower Set borrower_address='" + Address + "' Where borrower_id='" + borrower_id + "'");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+
+    }
+
+    boolean SetName(int borrower_id, String name) {
+
+        try {
+            stmt.executeUpdate("Update Borrower Set borrower_name='" + name+ "' Where borrower_id='" + borrower_id + "'");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+
+    }
+
+
+    boolean SetGender(int borrower_id, char g) {
+
+        try {
+            stmt.executeUpdate("Update Borrower Set borrower_gender='" + g+ "' Where borrower_id='" + borrower_id + "'");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+
+    }
+
+    boolean SetFineAmount(int borrower_id, double fine_amount) {
+
+        try {
+            stmt.executeUpdate("Update Borrower Set fine='" + fine_amount + "' Where borrower_id='" + borrower_id + "'");
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return true;
+
+    }
+
+    boolean GetFineStatus(int borrower_id) {
+        boolean result = false;
+        try {
+            ResultSet rs = stmt.executeQuery("select fine_defaulter from Borrower where borrower_id='" + borrower_id + "'");
+
+            while (rs.next()) {
+
+                result = rs.getBoolean(1);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return result;
+    }
+
+    double GetFineAmount(int borrower_id) {
+
+        double amount = 0.0;
+        try {
+            ResultSet rs = stmt.executeQuery("select fine from Borrower where borrower_id='" + borrower_id + "'");
+
+            while (rs.next()) {
+
+                amount = rs.getDouble(1);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return amount;
+
+    }
+
+    //Librarian Functions implemented here
+    ArrayList<Librarian> LoadAllLibrarians() {
+
+        ArrayList<Librarian> CurrentLibrarians = new ArrayList<>();
+        try {
+            ResultSet rs = stmt.executeQuery("Select * From Staff Where rank='librarian'");
+            while (rs.next()) {
+                int staff_id;
+                String staff_name;
+                char staff_gender;
+
+                staff_id = rs.getInt(1);
+                staff_name = rs.getString(2);
+                staff_gender = rs.getString(3).charAt(0);
+
+                Librarian TempObj = new Librarian.LibrarianBuilder().id(staff_id).build();
+                CurrentLibrarians.add(TempObj);
+
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return CurrentLibrarians;
+
+    }
+
+
+
+
+    boolean AddBorrower(int user_id, String user_name, char user_gender, String add, String telnum, String pw) {
+
+        try {
+
+            boolean fine = false;
+            double fineamount = 0.0;
+
+            stmt.executeUpdate("Insert into Borrower (borrower_id, borrower_name ,borrower_gender, borrower_address , borrower_number , fine_defaulter ,fine, password) values('" + user_id + "','" + user_name + "','" + user_gender + "','" + add + "','" + telnum + "','" + fine + "','" + fineamount + "','" +pw+"')");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+        return true;
+
+    }
+
+
     boolean AddNewLoan(Loan LoanObj) {
+
         try {
             int loanid = LoanObj.GetLoanId();
             Date issue_date = LoanObj.getIssueDate();
@@ -525,7 +539,9 @@ public class dbConnectivity {
         int bookId = -1;
         try {
             ResultSet rs = stmt.executeQuery("select book_id from Loan where loanid='" + loanId + "'");
+
             while (rs.next()) {
+
                 bookId = rs.getInt(1);
 
             }
@@ -615,27 +631,6 @@ public class dbConnectivity {
 
         return DueDate;
 
-    }
-
-    static Books GetaBookbyId(int book_id) {
-        Books CurrentBook = new Books();
-        dbConnectivity dbConnectivity = new dbConnectivity();
-        try {
-            ResultSet rs = dbConnectivity.stmt.executeQuery("select * from Books where book_id='" + book_id + "'");
-            while (rs.next()) {
-                int quantity;
-                String type, title, author, subject;
-                book_id = rs.getInt(1);
-                type = rs.getString(2);
-                title = rs.getString(3);
-                author = rs.getString(4);
-                subject = rs.getString(5);
-                quantity = rs.getInt(6);
-                Books NewBook = new Books(book_id, type, title, author, subject, quantity);
-                CurrentBook = NewBook;
-            }
-        } catch (Exception e) { System.out.println(e); }
-        return CurrentBook;
     }
 
     Books GetLoanedBook(int loanId) {
@@ -779,37 +774,70 @@ public class dbConnectivity {
 
     }
 
+
+
     boolean CheckUserId (int ID)
     {
         boolean flag=false;
+
         try {
+
             ResultSet rs = stmt.executeQuery("select * from Borrower where borrower_id='" + ID+ "'");
             if(rs.next())
             {
-                   flag=true;
+                flag=true;
             }
+
 
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         return flag;
-    
+
     }
- 
-    boolean CheckIsBookLoaned(int book_id)
+    boolean CheckUserPw (String pw)
     {
         boolean flag=false;
+
         try {
+
+            ResultSet rs = stmt.executeQuery("select * from Borrower where borrower_password='" + pw+ "'");
+            if(rs.next())
+            {
+                flag=true;
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return flag;
+
+    }
+
+    boolean CheckIsBookLoaned(int book_id)
+    {
+
+        boolean flag=false;
+
+        try {
+
             ResultSet rs = stmt.executeQuery("select * from Loan where book_id='" +book_id+ " 'and returned_status ='" +0+"'");
             if(rs.next())
             {
-                   flag=true;
+
+                flag=true;
             }
+
 
         } catch (Exception e) {
             System.out.println(e);
         }
+
         return flag;
+
     }
+
 }

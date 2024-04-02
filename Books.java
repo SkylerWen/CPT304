@@ -41,7 +41,7 @@ public class Books {
 
     public String getType() {
         dbConnectivity db = new dbConnectivity();
-        String typeofbook = db.GetTitleofBook(this.book_id);
+        String typeofbook = db.GetTypeofBook(this.book_id);
         return typeofbook;
     }
     public void setType(String type) {

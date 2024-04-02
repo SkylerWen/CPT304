@@ -14,7 +14,7 @@ public class ContextLoan {
     //SET & GET
     public void setState(LoanState state){
         this.state = state;
-        loan.SetState(state);
+        //loan.SetState(state);
     }
     public void setLoan(Loan loan){
         this.loan = loan;
