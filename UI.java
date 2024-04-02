@@ -17,7 +17,7 @@ public class UI {
 
             Library LibObj = new Library ();
             dbConnectivity db = new dbConnectivity();
-            boolean flag =false;
+
 
             Scanner scanner = new Scanner(System.in);//键盘输入
             System.out.println("请选择：1登录, 2注册");
@@ -32,21 +32,14 @@ public class UI {
                 int id = scanner.nextInt();
                 System.out.println("输入您的password:");
                 int password = scanner.nextInt();
+
                 if(choice == 2)
-                {
-                    flag=LibObj.IsLibrarianPresent(id);
-                }
-                else if (choice == 1)
-                {
-                    flag=LibObj.IsBorrowerPresent(id);
-                }
-                if(flag==true && choice == 2)
                 {
 
                     LibrarianUI.Librarian(id , LibObj);
 
                 }
-                if(flag==true && choice == 1)
+                if(choice == 1)
                 {
 
                     BorrowerUI.Borrower(id , LibObj);
@@ -66,8 +59,11 @@ public class UI {
                 String tele = scanner.nextLine();
                 System.out.println("请输入您的address：");
                 String address = scanner.nextLine();
+                System.out.println("请输入您的password");
+                String password = scanner.nextLine();
+
                 boolean success =false;
-                success = db.AddBorrower(id,name,gender,address,tele);
+                success = db.AddBorrower(id,name,gender,address,tele,password);
                 if(success ==true ){
                     System.out.println("您已注册成功！");
                 }

@@ -22,7 +22,6 @@ public class Borrower extends Users{
         private double fine = 0.0;
         private String address;
 
-
         public Borrower build(){
             return new Borrower(this);
         }

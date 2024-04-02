@@ -30,7 +30,7 @@ public class LibrarianUI {
             Obj.LibrarianAddNewBook(NewAuthor , NewTitle , NewSubject , quantity , id);
             System.out.println("New Book Added Successfully");
         }
-        //ArrayList<Books> BooksList ,String NewType, String NewAuthor ,String NewTitle ,String NewSubject , int quantity
+
         else if(choice ==2)
         {
             System.out.println("请输入book_id：");
