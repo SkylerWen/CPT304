@@ -49,19 +49,20 @@ public class UI {
 
             }else if (choice1 == 2){
 //                注册
+                Scanner scanner3 = new Scanner(System.in);
                 System.out.println("请输入您的姓名：");
-                String name = scanner.nextLine();
+                String name = scanner3.nextLine();
                 System.out.println("请输入您的id");
-                int id = scanner.nextInt();
+                int id = scanner3.nextInt();
                 System.out.println("请输入您的gender：");
-                String inputGender = scanner.nextLine();
+                String inputGender = scanner3.nextLine();
                 char gender = inputGender.charAt(0);
                 System.out.println("请输入您的telephone");
-                String tele = scanner.nextLine();
+                String tele = scanner3.nextLine();
                 System.out.println("请输入您的address：");
-                String address = scanner.nextLine();
+                String address = scanner3.nextLine();
                 System.out.println("请输入您的password");
-                String password = scanner.nextLine();
+                String password = scanner3.nextLine();
 
                 boolean success =false;
                 success = db.AddBorrower(id,name,gender,address,tele,password);

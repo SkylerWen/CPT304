@@ -18,6 +18,7 @@ public class LibrarianUI {
 
         if(choice ==1)
         {
+
             System.out.println("请输入NewType：");
             String NewType = scanner.nextLine();
             System.out.println("请输入NewAuthor：");
@@ -35,8 +36,9 @@ public class LibrarianUI {
 
         else if(choice ==2)
         {
+            Scanner scanner1 = new Scanner(System.in);
             System.out.println("请输入book_id：");
-            int book_id = scanner.nextInt();
+            int book_id = scanner1.nextInt();
             boolean result= Obj.LibrarianDeleteBook(book_id, id);
             if(result ==true )
             {
@@ -50,6 +52,7 @@ public class LibrarianUI {
 
         else if (choice ==3)
         {
+            Scanner scanner2 = new Scanner(System.in);
             System.out.println("==================================");
             System.out.println("1.更新Title");
             System.out.println("2.更新Author");
@@ -57,11 +60,11 @@ public class LibrarianUI {
             System.out.println("4.更新quantity");
             System.out.println("==================================");
             System.out.println("请输入您的选择:");
-            int option = scanner.nextInt();
+            int option = scanner2.nextInt();
             System.out.println("请输入book_id：");
-            int book_id = scanner.nextInt();
+            int book_id = scanner2.nextInt();
             System.out.println("请输入更新后的Info：");
-            String NewInfo = scanner.nextLine();
+            String NewInfo = scanner2.nextLine();
             if(option == 2)
             {
                 Obj.LibrarianUpdateBookInfo(book_id , id ,NewInfo ,0,option);
@@ -86,6 +89,7 @@ public class LibrarianUI {
             System.out.println("Updated Successfully");
         }
 
+        /////////////要返回UI类开始
 
     }
 
