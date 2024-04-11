@@ -20,18 +20,18 @@ public class UI {
 
 
             Scanner scanner = new Scanner(System.in);//键盘输入
-            System.out.println("请选择：1登录, 2注册");
+            System.out.println("Please enter your choice: 1 for Login, 2 for Register");
             int choice1 = scanner.nextInt();
             if (choice1 == 1){
 //                登录
                 Scanner scanner2 = new Scanner(System.in);
-                System.out.println("请输入您的姓名：");
+                System.out.println("Please enter your name:");
                 String name = scanner2.nextLine();
-                System.out.println("请选择您的身份：1表示Borrower, 2表示Librarian");
+                System.out.println("Please select your identity: 1 for Borrower, 2 for Librarian.");
                 int choice = scanner.nextInt();
-                System.out.println("输入您的id:");
+                System.out.println("Please enter your id:");
                 int id = scanner.nextInt();
-                System.out.println("输入您的password:");
+                System.out.println("Please enter your password:");
                 int password = scanner.nextInt();
 
                 if(choice == 2)
@@ -50,24 +50,24 @@ public class UI {
             }else if (choice1 == 2){
 //                注册
                 Scanner scanner3 = new Scanner(System.in);
-                System.out.println("请输入您的姓名：");
+                System.out.println("Please enter your name:");
                 String name = scanner3.nextLine();
-                System.out.println("请输入您的id");
+                System.out.println("Please enter your id:");
                 int id = scanner3.nextInt();
-                System.out.println("请输入您的gender：");
+                System.out.println("Please enter your gender:");
                 String inputGender = scanner3.nextLine();
                 char gender = inputGender.charAt(0);
-                System.out.println("请输入您的telephone");
+                System.out.println("Please enter your telephone:");
                 String tele = scanner3.nextLine();
-                System.out.println("请输入您的address：");
+                System.out.println("Please enter your address:");
                 String address = scanner3.nextLine();
-                System.out.println("请输入您的password");
+                System.out.println("Please enter your password:");
                 String password = scanner3.nextLine();
 
                 boolean success =false;
                 success = db.AddBorrower(id,name,gender,address,tele,password);
                 if(success ==true ){
-                    System.out.println("您已注册成功！");
+                    System.out.println("You have registered successfully!");
                 }
                 login();
             }

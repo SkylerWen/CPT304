@@ -7,27 +7,27 @@ public class LibrarianUI {
     public static void Librarian(int id , Library Obj) {
 
         System.out.println("==================================");
-        System.out.println("欢迎" + id + "登录图书管理系统");
-        System.out.println("1.添加新书籍到图书馆");
-        System.out.println("2.删除书籍");
-        System.out.println("3.更新书籍信息");
+        System.out.println("Welcome" + id + "to the Library Management System");
+        System.out.println("1. Add new books to the library");
+        System.out.println("2. Delete books");
+        System.out.println("3. Update book information");
         System.out.println("==================================");
-        System.out.println("请输入您的选择:");
+        System.out.println("Please enter your choice:");
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
 
         if(choice ==1)
         {
 
-            System.out.println("请输入NewType：");
+            System.out.println("Please enter NewType:");
             String NewType = scanner.nextLine();
-            System.out.println("请输入NewAuthor：");
+            System.out.println("Please enter NewAuthor：");
             String NewAuthor = scanner.nextLine();
-            System.out.println("请输入NewTitle：");
+            System.out.println("Please enter NewTitle：");
             String NewTitle = scanner.nextLine();
-            System.out.println("请输入NewSubject：");
+            System.out.println("Please enter NewSubject：");
             String NewSubject = scanner.nextLine();
-            System.out.println("请输入quantity：");
+            System.out.println("Please enter quantity：");
             int quantity = scanner.nextInt();
             Obj.LibrarianAddNewBook(NewType,NewAuthor , NewTitle , NewSubject , quantity , id);
             // String NewType, String NewAuthor ,String NewTitle ,String NewSubject , int quantity , int lib_id
@@ -37,7 +37,7 @@ public class LibrarianUI {
         else if(choice ==2)
         {
             Scanner scanner1 = new Scanner(System.in);
-            System.out.println("请输入book_id：");
+            System.out.println("Please enter your book_id：");
             int book_id = scanner1.nextInt();
             boolean result= Obj.LibrarianDeleteBook(book_id, id);
             if(result ==true )
@@ -54,16 +54,16 @@ public class LibrarianUI {
         {
             Scanner scanner2 = new Scanner(System.in);
             System.out.println("==================================");
-            System.out.println("1.更新Title");
-            System.out.println("2.更新Author");
-            System.out.println("3.更新Subject");
-            System.out.println("4.更新quantity");
+            System.out.println("1.Update Title");
+            System.out.println("2.Update Author");
+            System.out.println("3.Update Subject");
+            System.out.println("4.Update quantity");
             System.out.println("==================================");
-            System.out.println("请输入您的选择:");
+            System.out.println("Please enter your choice:");
             int option = scanner2.nextInt();
-            System.out.println("请输入book_id：");
+            System.out.println("Please enter your bookID：");
             int book_id = scanner2.nextInt();
-            System.out.println("请输入更新后的Info：");
+            System.out.println("Please enter the updated Info:");
             String NewInfo = scanner2.nextLine();
             if(option == 2)
             {
@@ -82,14 +82,14 @@ public class LibrarianUI {
 
             else if(option == 4)
             {
-                System.out.println("请输入quantity：");
+                System.out.println("Please enter quantity:");
                 int quantity = scanner.nextInt();
                 Obj.LibrarianUpdateBookInfo(book_id , id ," ",quantity, option );
             }
             System.out.println("Updated Successfully");
         }
 
-        /////////////要返回UI类开始
+
 
     }
 
